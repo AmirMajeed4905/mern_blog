@@ -8,10 +8,11 @@ import cors from 'cors'
 import compression from 'compression'
 import helmet from 'helmet'
 import rateLimit from 'express-rate-limit'
+import errorHandler from './utils/errorHandler.js'
 
 import connectDB from './config/db.js'
 // import routes here when ready
-// import AuthRoute from './routes/Auth.route.js'
+import AuthRoute from './routes/user.routes.js'
 // import UserRoute from './routes/User.route.js'
 // import CategoryRoute from './routes/Category.route.js'
 // import BlogRoute from './routes/Blog.route.js'
@@ -54,7 +55,7 @@ app.use(express.urlencoded({ extended: true }))
 // ----------------------
 // ROUTES
 // ----------------------
-// app.use('/api/auth', AuthRoute)
+app.use('/api/auth', AuthRoute)
 // app.use('/api/user', UserRoute)
 // app.use('/api/category', CategoryRoute)
 // app.use('/api/blog', BlogRoute)
@@ -68,16 +69,7 @@ app.get('/', (req, res) => {
 // ----------------------
 // ERROR HANDLER
 // ----------------------
-app.use((err, req, res, next) => {
-  const statusCode = err.statusCode || 500
-  const message = err.message || 'Internal server error.'
-  res.status(statusCode).json({
-    success: false,
-    statusCode,
-    message
-  })
-})
-
+app.use(errorHandler);
 // ----------------------
 // START SERVER
 // ----------------------
