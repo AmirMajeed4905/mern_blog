@@ -10,7 +10,7 @@ import Profile from "./pages/Admin/Profile";
 import AdminLayout from "./pages/Admin/AdminLayout";
 
 import AdminRoute from "./routes/AdminRoute";
-
+import NotFoundPage from "./pages/Notfound";
 function App() {
   // later ye /api/auth/me se ayega
   const currentUser = { name: "Admin", role: "admin" };
@@ -20,7 +20,7 @@ function App() {
       <Toaster position="top-right" />
       <Router>
         <Routes>
-
+         <Route path="*" element={<NotFoundPage />} /> {/* 404 route */}
           {/* PUBLIC ROUTES */}
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />

@@ -1,17 +1,24 @@
-// Users.jsx
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "../../utils/axios";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 5;
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const limit = 10; // Users per page
 
-  const fetchUsers = async () => {
+  // Fetch users from backend
+  const fetchUsers = async (pageNumber) => {
     try {
-      const res = await api.get("/api/auth/users");
-      setUsers(res.data.users || []);
+      setLoading(true);
+      const res = await api.get(`/api/auth/users?page=${pageNumber}&limit=${limit}`);
+      const data = res.data;
+
+      setUsers(data.users || []);
+      setTotalPages(Math.max(data.totalPages || 1, 1)); // Ensure at least 1 page
+      setTotalUsers(data.totalUsers || 0);
     } catch (err) {
       console.error("Failed to fetch users:", err);
     } finally {
@@ -19,25 +26,25 @@ const Users = () => {
     }
   };
 
+  // Fetch whenever page changes
   useEffect(() => {
-    fetchUsers();
-  }, []);
+    fetchUsers(page);
+  }, [page]);
 
-  // Pagination logic
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
-  const totalPages = Math.ceil(users.length / usersPerPage);
+  // Debug: check backend response
+  useEffect(() => {
+    console.log("Page:", page, "TotalPages:", totalPages, "TotalUsers:", totalUsers);
+  }, [page, totalPages, totalUsers]);
 
-  const handlePageChange = (page) => setCurrentPage(page);
-
-  if (loading) return <div className="p-6 text-gray-600">Loading users...</div>;
+  if (loading)
+    return <div className="p-6 text-gray-600 text-center">Loading users...</div>;
 
   return (
-    <div className="p-6">
+    <div className="p-1">
       <h1 className="text-3xl font-bold mb-6 text-gray-800">Users</h1>
 
-      <div className="overflow-x-auto bg-white shadow-md rounded-lg">
+      {/* Users Table */}
+      <div className="overflow-x-auto bg-white shadow-lg rounded-2xl">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
@@ -48,8 +55,11 @@ const Users = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {currentUsers.map((user) => (
-              <tr key={user._id} className="hover:bg-gray-50 transition duration-150 ease-in-out">
+            {users.map((user) => (
+              <tr
+                key={user._id}
+                className="hover:bg-gray-50 transition duration-150 ease-in-out"
+              >
                 <td className="px-6 py-4 whitespace-nowrap">{user.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
                 <td className="px-6 py-4 whitespace-nowrap capitalize">{user.role}</td>
@@ -61,23 +71,70 @@ const Users = () => {
       </div>
 
       {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="mt-4 flex flex-wrap gap-2">
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <button
-              key={page}
-              onClick={() => handlePageChange(page)}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                page === currentPage ? "bg-blue-500 text-white shadow-md" : "bg-gray-200 hover:bg-gray-300"
-              }`}
-            >
-              {page}
-            </button>
-          ))}
-        </div>
-      )}
+      <div className="mt-4 flex items-center gap-2 overflow-x-auto py-2">
+  {/* Prev */}
+  <button
+    onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+    disabled={page === 1}
+    className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+      page === 1
+        ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+        : "bg-gray-200 hover:bg-gray-300"
+    }`}
+  >
+    Prev
+  </button>
 
-      <p className="mt-4 text-sm text-gray-500">Total users: {users.length}</p>
+  {/* Page buttons */}
+  {Array.from({ length: totalPages }, (_, i) => i + 1)
+    .filter((p) => {
+      // Always show first 2, last 2, current ±2
+      return (
+        p <= 2 ||
+        p > totalPages - 2 ||
+        (p >= page - 2 && p <= page + 2)
+      );
+    })
+    .map((p, idx, arr) => {
+      // Add ellipsis
+      const prev = arr[idx - 1];
+      const isGap = prev && p - prev > 1;
+      return (
+        <React.Fragment key={p}>
+          {isGap && <span className="px-2 text-gray-500">...</span>}
+          <button
+            onClick={() => setPage(p)}
+            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              p === page
+                ? "bg-blue-500 text-white shadow-md"
+                : "bg-gray-200 hover:bg-gray-300"
+            }`}
+          >
+            {p}
+          </button>
+        </React.Fragment>
+      );
+    })}
+
+  {/* Next */}
+  <button
+    onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+    disabled={page === totalPages}
+    className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+      page === totalPages
+        ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+        : "bg-gray-200 hover:bg-gray-300"
+    }`}
+  >
+    Next
+  </button>
+</div>
+
+
+      {/* Total Users */}
+      <p className="mt-4 text-sm text-gray-500">
+        Total users: {totalUsers}
+      </p>
     </div>
   );
 };
