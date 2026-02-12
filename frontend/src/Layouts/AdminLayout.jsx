@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import Sidebar from "./components/SideBar";
-import Navbar from "./components/Navbar";
+import Sidebar from "../pages/Admin/components/SideBar";
+import Navbar from "../pages/Admin/components/Navbar";
 
 const AdminLayout = ({ currentUser }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);

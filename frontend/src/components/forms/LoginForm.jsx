@@ -13,56 +13,75 @@ const LoginForm = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-  try {
-    // Matches backend POST /api/auth/login
-   const res = await api.post("/api/auth/login", data);
-toast.success(`Welcome back, ${res.data.user.name}!`);
-navigate("/dashboard");// redirect after login
-  } catch (err) {
-    // error handling from backend
-    toast.error(err.response?.data?.message || "Login failed");
-  }
-};
-
+    try {
+      const res = await api.post("/api/auth/login", data);
+      toast.success(`Welcome back, ${res.data.user.name}!`);
+      navigate("/"); // redirect after login
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Login failed");
+    }
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <div>
-        <label className="block text-gray-700 mb-1">Email</label>
-        <input
-          type="email"
-          {...register("email", { required: "Email is required" })}
-          className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-            errors.email ? "border-red-500" : "border-gray-300"
-          }`}
-        />
-        {errors.email && (
-          <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-        )}
+    <div className="relative w-full min-h-screen flex items-center justify-center bg-black text-white">
+      {/* Background Layers */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800"></div>
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1557682224-5b8590cd9ec5?auto=format&fit=crop&w=1470&q=80')] bg-cover bg-center opacity-20"></div>
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
       </div>
 
-      <div>
-        <label className="block text-gray-700 mb-1">Password</label>
-        <input
-          type="password"
-          {...register("password", { required: "Password is required" })}
-          className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-            errors.password ? "border-red-500" : "border-gray-300"
-          }`}
-        />
-        {errors.password && (
-          <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
-        )}
-      </div>
-
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors"
+      {/* Form */}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="relative w-full max-w-md p-10 rounded-3xl bg-gradient-to-tl from-yellow-400 via-orange-400 to-red-500 shadow-2xl"
       >
-        {isSubmitting ? "Logging in..." : "Login"}
-      </button>
-    </form>
+        <h2 className="text-4xl font-extrabold text-black text-center mb-8">
+          Welcome Back
+        </h2>
+
+        {/* Email */}
+        <div className="mb-6">
+          <label className="block text-black mb-2 font-semibold">Email</label>
+          <input
+            type="email"
+            {...register("email", { required: "Email is required" })}
+            placeholder="your@email.com"
+            className={`w-full px-5 py-3 rounded-xl border border-black focus:outline-none focus:ring-2 focus:ring-yellow-300 text-black ${
+              errors.email ? "border-red-500" : "border-black"
+            }`}
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+          )}
+        </div>
+
+        {/* Password */}
+        <div className="mb-6">
+          <label className="block text-black mb-2 font-semibold">Password</label>
+          <input
+            type="password"
+            {...register("password", { required: "Password is required" })}
+            placeholder="********"
+            className={`w-full px-5 py-3 rounded-xl border border-black focus:outline-none focus:ring-2 focus:ring-yellow-300 text-black ${
+              errors.password ? "border-red-500" : "border-black"
+            }`}
+          />
+          {errors.password && (
+            <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+          )}
+        </div>
+
+        {/* Submit */}
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full py-3 rounded-xl bg-black text-yellow-400 font-bold text-lg hover:text-white hover:scale-105 transition-all duration-300"
+        >
+          {isSubmitting ? "Logging in..." : "Login"}
+        </button>
+      </form>
+    </div>
   );
 };
 

@@ -34,8 +34,8 @@ const app = express()
 app.use(helmet())              // Secure HTTP headers
 app.use(compression())         // Gzip compression
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 min
-  max: 100, // max requests per IP
+  windowMs: 1 * 60 * 1000, // 15 min
+  max: 10, // max requests per IP
   standardHeaders: true, // Return rate limit info in `RateLimit-*` headers
   legacyHeaders: false,    // Disable `X-RateLimit-*` headers
 });

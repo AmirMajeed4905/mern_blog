@@ -13,7 +13,7 @@ const Sidebar = ({ isMobile }) => {
 
   return (
     <div
-      className={`
+      className={` 
         h-full bg-white
         shadow-[4px_0_20px_rgba(0,0,0,0.08)]
         transition-all duration-300

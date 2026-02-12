@@ -1,0 +1,198 @@
+import React from 'react';
+import { ArrowRight, Clock } from 'lucide-react';
+
+const BlogSection = () => {
+  const blogs = [
+    {
+      title: 'Mastering the Art of Creative Writing',
+      description:
+        'Learn how to turn everyday thoughts into powerful storytelling that resonates with your audience.',
+      date: 'May 20, 2024',
+      image:
+        'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=900&q=80',
+    },
+    {
+      title: 'How to Stay Consistent with Your Blog',
+      description:
+        'Discover practical ways to build a writing habit, manage time, and never run out of ideas.',
+      date: 'June 1, 2024',
+      image:
+        'https://images.unsplash.com/photo-1522199710521-72d69614c702?auto=format&fit=crop&w=900&q=80',
+    },
+    {
+      title: 'SEO Tips for Writers',
+      description:
+        'Boost your content visibility with simple on‑page SEO techniques designed for modern creators.',
+      date: 'June 10, 2024',
+      image:
+        'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80',
+    },
+    {
+      title: 'Mastering the Art of Creative Writing',
+      description:
+        'Learn how to turn everyday thoughts into powerful storytelling that resonates with your audience.',
+      date: 'May 20, 2024',
+      image:
+        'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=900&q=80',
+    },
+    {
+      title: 'How to Stay Consistent with Your Blog',
+      description:
+        'Discover practical ways to build a writing habit, manage time, and never run out of ideas.',
+      date: 'June 1, 2024',
+      image:
+        'https://images.unsplash.com/photo-1522199710521-72d69614c702?auto=format&fit=crop&w=900&q=80',
+    },
+    {
+      title: 'SEO Tips for Writers',
+      description:
+        'Boost your content visibility with simple on‑page SEO techniques designed for modern creators.',
+      date: 'June 10, 2024',
+      image:
+        'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80',
+    }
+  ];
+
+  return (
+    <section
+      style={{
+        padding: '6rem 1rem',
+        background: 'linear-gradient(180deg, #000000 0%, #0a0a0a 100%)',
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+    >
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+        .blog-container {
+          max-width: 1100px;
+          margin: 0 auto;
+          position: relative;
+          z-index: 1;
+        }
+
+        .blog-title {
+          font-family: 'Playfair Display', serif;
+          font-size: clamp(2rem, 5vw, 3rem);
+          font-weight: 900;
+          text-align: center;
+          margin-bottom: 3rem;
+          background: linear-gradient(135deg, #FFD700 0%, #FFF 50%, #FFD700 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: textShimmer 4s linear infinite;
+        }
+
+        @keyframes textShimmer {
+          0% { background-position: 0% center; }
+          100% { background-position: 200% center; }
+        }
+
+        .blog-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          gap: 2rem;
+        }
+
+        .blog-card {
+          background: rgba(255, 215, 0, 0.08);
+          border: 1px solid rgba(255, 215, 0, 0.3);
+          border-radius: 20px;
+          overflow: hidden;
+          box-shadow: 0 15px 40px rgba(255, 215, 0, 0.2);
+          transition: transform 0.4s ease, box-shadow 0.4s ease;
+          cursor: pointer;
+          animation: fadeInUp 1s ease forwards;
+        }
+
+        .blog-card:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 25px 60px rgba(255, 215, 0, 0.4);
+        }
+
+        .blog-image {
+          width: 100%;
+          height: 220px;
+          object-fit: cover;
+        }
+
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        .blog-content {
+          padding: 1.8rem;
+          font-family: 'Outfit', sans-serif;
+          color: white;
+        }
+
+        .blog-meta {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+          color: rgba(255, 255, 255, 0.6);
+          font-size: 0.9rem;
+          margin-bottom: 0.5rem;
+        }
+
+        .blog-title-card {
+          font-size: 1.3rem;
+          font-weight: 700;
+          margin-bottom: 0.6rem;
+          color: #FFD700;
+        }
+
+        .blog-description {
+          color: rgba(255, 255, 255, 0.85);
+          font-size: 1rem;
+          line-height: 1.6;
+          margin-bottom: 1.5rem;
+        }
+
+        .read-more {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-weight: 600;
+          color: #FFD700;
+          text-decoration: none;
+          transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+          color: #FFA500;
+          transform: translateX(5px);
+        }
+
+      `}</style>
+
+      <div className="blog-container">
+        <h2 className="blog-title">Latest from the Blog</h2>
+
+        <div className="blog-grid">
+          {blogs.map((post, i) => (
+            <div className="blog-card" key={i} style={{ animationDelay: `${i * 0.2}s` }}>
+              <img src={post.image} alt={post.title} className="blog-image" />
+
+              <div className="blog-content">
+                <div className="blog-meta">
+                  <Clock size={16} />
+                  <span>{post.date}</span>
+                </div>
+                <h3 className="blog-title-card">{post.title}</h3>
+                <p className="blog-description">{post.description}</p>
+                <span className="read-more">
+                  Read More <ArrowRight size={18} />
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default BlogSection;

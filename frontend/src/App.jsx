@@ -7,25 +7,34 @@ import AdminDashboard from "./pages/Admin/AdminDashboard";
 import User from "./pages/Admin/User";
 import Blogs from "./pages/Admin/Blogs";
 import Profile from "./pages/Admin/Profile";
-import AdminLayout from "./pages/Admin/AdminLayout";
+import AdminLayout from "./Layouts/AdminLayout";
 
 import AdminRoute from "./routes/AdminRoute";
 import NotFoundPage from "./pages/Notfound";
+import UserLayout from "./pages/UserLayout";
+
+
 function App() {
   // later ye /api/auth/me se ayega
   const currentUser = { name: "Admin", role: "admin" };
 
   return (
     <>
+
       <Toaster position="top-right" />
       <Router>
         <Routes>
-         <Route path="*" element={<NotFoundPage />} /> {/* 404 route */}
-          {/* PUBLIC ROUTES */}
+          
+          <Route path="/" element={<UserLayout />}>
+            <Route index element={<h1 className="text-2xl font-bold">Welcome to the User Dashboard</h1>} />
+          </Route>
+         
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="*" element={<NotFoundPage />} /> {/* 404 route */}
 
-          {/* 🔒 ADMIN ROUTES */}
+          🔒 ADMIN ROUTES
           <Route
             path="/admin"
             element={

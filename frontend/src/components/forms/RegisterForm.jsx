@@ -26,7 +26,7 @@ export default function RegisterForm() {
       const res = await axios.post("http://localhost:5000/api/auth/register", data);
      
       toast.success(`Registered successfully! Welcome ${res.data.user.name}`);
- navigate("/dashboard");
+ navigate("/");
       
     } catch (err) {
     toast.error(err.response?.data?.message || "Error registering user");
