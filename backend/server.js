@@ -13,9 +13,13 @@ import errorHandler from './utils/errorHandler.js'
 import connectDB from './config/db.js'
 // import routes here when ready
 import AuthRoute from './routes/user.routes.js'
+import BlogRoute from './routes/blog.routes.js'
+import categoryRoutes from "./routes/category.routes.js";
+
+
 // import UserRoute from './routes/User.route.js'
 // import CategoryRoute from './routes/Category.route.js'
-// import BlogRoute from './routes/Blog.route.js'
+// import BlogRoute from './routes/blog.routes.js'
 // import CommentRoute from './routes/Comment.route.js'
 // import BlogLikeRoute from './routes/Bloglike.route.js'
 
@@ -34,8 +38,8 @@ const app = express()
 app.use(helmet())              // Secure HTTP headers
 app.use(compression())         // Gzip compression
 const limiter = rateLimit({
-  windowMs: 1 * 60 * 1000, // 15 min
-  max: 10, // max requests per IP
+  windowMs: 15 * 60 * 1000, // 15 min
+  max: 100, // max requests per IP
   standardHeaders: true, // Return rate limit info in `RateLimit-*` headers
   legacyHeaders: false,    // Disable `X-RateLimit-*` headers
 });
@@ -56,6 +60,8 @@ app.use(express.urlencoded({ extended: true }))
 // ROUTES
 // ----------------------
 app.use('/api/auth', AuthRoute)
+app.use('/api/blog',BlogRoute)
+app.use("/api/categories", categoryRoutes);
 // app.use('/api/user', UserRoute)
 // app.use('/api/category', CategoryRoute)
 // app.use('/api/blog', BlogRoute)

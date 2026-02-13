@@ -6,8 +6,8 @@ import {
   getCurrentUser,
   updateName,
   updatePassword
-} from "../controller/auth.controller.js";
-import { getUsers } from "../controller/user.controller.js";
+} from "../controllers/auth.controller.js";
+import { getUsers } from "../controllers/user.controller.js";
 import { requireAuth } from "../middleware/authenticate.js";
 import { requireAdmin } from "../middleware/onlyadmin.js";
 

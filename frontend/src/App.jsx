@@ -12,7 +12,7 @@ import AdminLayout from "./Layouts/AdminLayout";
 import AdminRoute from "./routes/AdminRoute";
 import NotFoundPage from "./pages/Notfound";
 import UserLayout from "./pages/UserLayout";
-
+import BlogDetail from "./pages/BlogDetail"
 
 function App() {
   // later ye /api/auth/me se ayega
@@ -24,17 +24,29 @@ function App() {
       <Toaster position="top-right" />
       <Router>
         <Routes>
-          
+
           <Route path="/" element={<UserLayout />}>
             <Route index element={<h1 className="text-2xl font-bold">Welcome to the User Dashboard</h1>} />
           </Route>
-         
+
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="profile" element={<Profile />} />
-          <Route path="*" element={<NotFoundPage />} /> {/* 404 route */}
 
-          🔒 ADMIN ROUTES
+
+          {/* 404 route */}
+
+          <Route path="*" element={<NotFoundPage />} />
+          {/* PUBLIC SITE ROUTES */}
+          <Route path="/" element={<UserLayout />}>
+            <Route index element={<h1 className="text-2xl font-bold">Welcome to the User Dashboard</h1>} />
+            {/* Blog detail dynamic route: */}
+          </Route>
+            <Route path="blog/:slug" element={<BlogDetail />} />
+
+
+
+          {/* 🔒 ADMIN ROUTES */}
           <Route
             path="/admin"
             element={

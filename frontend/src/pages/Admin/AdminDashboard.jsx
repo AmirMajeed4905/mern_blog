@@ -7,6 +7,32 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+  const getStats = async () => {
+    try {
+      setLoading(true);
+
+      // Users
+      const usersRes = await api.get("/api/auth/users?page=1&limit=1");
+      const totalUsers = usersRes.data.totalUsers || 0;
+
+      // Blogs
+      const blogsRes = await api.get("/api/blog?page=1&limit=1"); // minimal request
+      // assuming backend returns totalBlogs
+      const totalPosts = blogsRes.data.totalBlogs || blogsRes.data.totalPages * 1 || 0;
+
+      setStats({ users: totalUsers, posts: totalPosts });
+    } catch (err) {
+      console.error("Failed to fetch stats:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  getStats();
+}, []);
+
+
+  useEffect(() => {
     const getStats = async () => {
       try {
         setLoading(true);

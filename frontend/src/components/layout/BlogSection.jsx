@@ -1,65 +1,31 @@
-import React from 'react';
-import { ArrowRight, Clock } from 'lucide-react';
+import React, { useEffect, useState } from "react";
+import { ArrowRight, Clock } from "lucide-react";
+import { Link } from "react-router-dom"; // for linking to detail page
 
 const BlogSection = () => {
-  const blogs = [
-    {
-      title: 'Mastering the Art of Creative Writing',
-      description:
-        'Learn how to turn everyday thoughts into powerful storytelling that resonates with your audience.',
-      date: 'May 20, 2024',
-      image:
-        'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=900&q=80',
-    },
-    {
-      title: 'How to Stay Consistent with Your Blog',
-      description:
-        'Discover practical ways to build a writing habit, manage time, and never run out of ideas.',
-      date: 'June 1, 2024',
-      image:
-        'https://images.unsplash.com/photo-1522199710521-72d69614c702?auto=format&fit=crop&w=900&q=80',
-    },
-    {
-      title: 'SEO Tips for Writers',
-      description:
-        'Boost your content visibility with simple on‑page SEO techniques designed for modern creators.',
-      date: 'June 10, 2024',
-      image:
-        'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80',
-    },
-    {
-      title: 'Mastering the Art of Creative Writing',
-      description:
-        'Learn how to turn everyday thoughts into powerful storytelling that resonates with your audience.',
-      date: 'May 20, 2024',
-      image:
-        'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=900&q=80',
-    },
-    {
-      title: 'How to Stay Consistent with Your Blog',
-      description:
-        'Discover practical ways to build a writing habit, manage time, and never run out of ideas.',
-      date: 'June 1, 2024',
-      image:
-        'https://images.unsplash.com/photo-1522199710521-72d69614c702?auto=format&fit=crop&w=900&q=80',
-    },
-    {
-      title: 'SEO Tips for Writers',
-      description:
-        'Boost your content visibility with simple on‑page SEO techniques designed for modern creators.',
-      date: 'June 10, 2024',
-      image:
-        'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80',
-    }
-  ];
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/blogs") // update base URL if your backend is hosted elsewhere
+      .then((res) => res.json())
+      .then((data) => {
+        setBlogs(data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  // short description helper
+  const getShortDesc = (text, length = 120) => {
+    return text ? (text.length > length ? text.substring(0, length) + "…" : text) : "";
+  };
 
   return (
     <section
       style={{
-        padding: '6rem 1rem',
-        background: 'linear-gradient(180deg, #000000 0%, #0a0a0a 100%)',
-        position: 'relative',
-        overflow: 'hidden',
+        padding: "6rem 1rem",
+        background: "linear-gradient(180deg, #000000 0%, #0a0a0a 100%)",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
       <style>{`
@@ -165,7 +131,6 @@ const BlogSection = () => {
           color: #FFA500;
           transform: translateX(5px);
         }
-
       `}</style>
 
       <div className="blog-container">
@@ -173,21 +138,34 @@ const BlogSection = () => {
 
         <div className="blog-grid">
           {blogs.map((post, i) => (
-            <div className="blog-card" key={i} style={{ animationDelay: `${i * 0.2}s` }}>
-              <img src={post.image} alt={post.title} className="blog-image" />
+            <Link
+              to={`/blog/${post.slug}`}
+              className="blog-card"
+              key={post._id}
+              style={{ animationDelay: `${i * 0.2}s`, textDecoration: "none" }}
+            >
+              <img
+                src={post.featuredImage}
+                alt={post.title}
+                className="blog-image"
+              />
 
               <div className="blog-content">
                 <div className="blog-meta">
                   <Clock size={16} />
-                  <span>{post.date}</span>
+                  <span>
+                    {new Date(post.createdAt).toLocaleDateString()}
+                  </span>
                 </div>
                 <h3 className="blog-title-card">{post.title}</h3>
-                <p className="blog-description">{post.description}</p>
+                <p className="blog-description">
+                  {getShortDesc(post.blogContent, 120)}
+                </p>
                 <span className="read-more">
                   Read More <ArrowRight size={18} />
                 </span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

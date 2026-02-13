@@ -41,18 +41,19 @@ const Navbar = ({ currentUser, onMenuClick }) => {
   };
 
   return (
-    <header
-      className="
-        sticky top-0 z-30
-        m-2 md:m-4
-        px-4 py-3
-        bg-white/80 dark:bg-gray-900/80
-        backdrop-blur
-        shadow-[0_10px_30px_rgba(0,0,0,0.1)]
-        rounded-2xl
-        flex items-center justify-between
-      "
-    >
+   <header
+  className="
+    sticky top-0 z-60
+    mx-2 md:mx-4
+    px-3 sm:px-4 md:px-6 py-3
+    bg-white/80 dark:bg-gray-900/80
+    backdrop-blur
+    shadow-[0_10px_30px_rgba(0,0,0,0.1)]
+    rounded-2xl
+    flex items-center justify-between
+  "
+>
+
       {/* LEFT */}
       <div className="flex items-center gap-3">
         <button
