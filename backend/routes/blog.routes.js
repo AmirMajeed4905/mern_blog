@@ -4,26 +4,30 @@ import {
     getAllBlogs,
     getBlogBySlug,
     updateBlog,
-    deleteBlog
+    deleteBlog,
+    getSingleBlog
 } from "../controllers/blog.controller.js";
 import upload from "../middleware/upload.js";
 
 const router = express.Router();
+// Create blog
+router.post("/", upload.single("featuredImage"), createBlog);
 
-// POST /api/blogs - create blog
-router.post("/create", upload.single("featuredImage"), createBlog);
-
-
-// GET /api/blogs - get all blogs
+// Get all blogs (pagination)
 router.get("/", getAllBlogs);
 
-// GET /api/blogs/:slug - get blog by slug
-router.get("/:slug", getBlogBySlug);
+// Get single blog by ID
+router.get("/:id", getSingleBlog);
 
-// PUT /api/blogs/:id - update blog by ID
-router.put("/:id", updateBlog);
+// Get single blog by slug
+router.get("/slug/:slug", getBlogBySlug);
 
-// DELETE /api/blogs/:id - delete blog by ID
+// Update blog
+router.put("/:id", upload.single("featuredImage"), updateBlog);
+
+// Delete blog
 router.delete("/:id", deleteBlog);
+
+
 
 export default router;

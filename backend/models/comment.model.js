@@ -14,7 +14,8 @@ const commentSchema = new mongoose.Schema({
     comment: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        default: '100'
     },
 }, { timestamps: true })
 

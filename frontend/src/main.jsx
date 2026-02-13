@@ -9,7 +9,6 @@ import { AuthProvider } from "./Context/AuthContext.jsx";
 createRoot(document.getElementById('root')).render(
   <AuthProvider>
    <Toaster position="top-right" />
-      {/* <Navbar /> */}
    
     <App />
   </AuthProvider>

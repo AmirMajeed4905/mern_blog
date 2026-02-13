@@ -27,11 +27,34 @@ const blogSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    featuredImage: {
-        type: String,
-        required: true,
-        trim: true
-    }
+
+    views: {
+        type: Number,
+        default: 200
+    },
+    likes: {
+        type: Number,
+        default: 89
+    },
+    comments: {
+        type: Number,
+        default: 10
+    },
+     
+
+    // comments: [
+    //     {
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         ref: 'Comment'
+    //     }
+
+    // ],
+
+
+   featuredImage: {
+  url: String,
+  public_id: String,
+}
 }, { timestamps: true });
 
 const Blog = mongoose.model('Blog', blogSchema, 'blogs');

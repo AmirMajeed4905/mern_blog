@@ -1,16 +1,19 @@
+import React from "react";
 
 function NotFoundPage() {
-
-
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
-      <header className="p-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Theme Demo</h1>
-      </header>
-
-      <main className="p-4">
-        <p>This content changes with the theme!</p>
-      </main>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-100 to-purple-200 text-gray-800">
+      <h1 className="text-6xl font-bold mb-4">404</h1>
+      <h2 className="text-2xl font-semibold mb-2">Page Not Found</h2>
+      <p className="text-center max-w-md mb-6">
+        Oops! The page you’re looking for doesn’t exist or has been moved.
+      </p>
+      <a
+        href="/"
+        className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition duration-300"
+      >
+        Go Back Home
+      </a>
     </div>
   );
 }
