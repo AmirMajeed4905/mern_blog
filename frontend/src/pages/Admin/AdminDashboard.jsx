@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FiUsers, FiFileText, FiTrendingUp, FiActivity } from "react-icons/fi";
+import { FiUsers, FiFileText, FiTrendingUp, FiActivity, FiMessageCircle } from "react-icons/fi";
 import api from "../../utils/axios";
 
 const AdminDashboard = () => {
@@ -86,15 +86,26 @@ const AdminDashboard = () => {
       changeType: "increase",
     },
     {
+      title: "Comments",
+      value: "94.2%",
+      icon: FiMessageCircle,
+      gradient: "from-amber-500 via-orange-500 to-red-500",
+      bgPattern: "from-amber-50 to-red-50 dark:from-amber-900/20 dark:to-red-900/20",
+      link: "/admin/comments",
+      change: "+5.3%",
+      changeType: "increase",
+    },
+    {
       title: "Engagement",
       value: "94.2%",
       icon: FiTrendingUp,
       gradient: "from-amber-500 via-orange-500 to-red-500",
-      bgPattern: "from-amber-50 to-red-50 dark:from-amber-900/20 dark:to-red-900/20",
+      bgPattern: "from-yellow-50 to-yellow-50 dark:from-yellow-200/20 dark:to-yellow-900/20",
       link: "/admin",
       change: "+5.3%",
       changeType: "increase",
     },
+
   ];
 
   return (
@@ -186,7 +197,7 @@ const AdminDashboard = () => {
           </Link>
 
           <Link
-            to="/admin/categories/add"
+            to="/admin/add-category"
             className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-700 dark:to-gray-600 border border-purple-200/50 dark:border-gray-600 hover:shadow-lg transition-all duration-200 group"
           >
             <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500 to-pink-600 text-white group-hover:scale-110 transition-transform duration-200">

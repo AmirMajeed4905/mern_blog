@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FiHome, FiUsers, FiFileText, FiMenu, FiChevronDown, FiTag, FiX } from "react-icons/fi";
+import { FiHome, FiUsers, FiFileText, FiMenu, FiChevronDown, FiTag, FiX,FiMessageCircle } from "react-icons/fi";
 
 const SideBar = ({ isMobile, isOpen, onClose }) => {
   const [isExpanded, setIsExpanded] = useState(!isMobile);
@@ -15,6 +15,7 @@ const SideBar = ({ isMobile, isOpen, onClose }) => {
       dropdown: [
         { name: "All Blogs", path: "/admin/blogs" },
         { name: "Add Blog", path: "/admin/blogs/add" },
+        
       ],
     },
     {
@@ -23,6 +24,13 @@ const SideBar = ({ isMobile, isOpen, onClose }) => {
       dropdown: [
         { name: "All Categories", path: "/admin/categories" },
         { name: "Add Category", path: "/admin/add-category" },
+      ],
+    },
+    {
+      name: "Comments",
+      icon: FiMessageCircle,
+      dropdown: [
+        { name: "All Comments", path: "/admin/comments" },
       ],
     },
   ];

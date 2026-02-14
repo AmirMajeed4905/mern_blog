@@ -17,6 +17,7 @@ const BlogDetail = lazy(() => import("./pages/BlogDetail"));
 const PostAddForm = lazy(() => import("./components/forms/PostAddForm"));
 const CategoryForm = lazy(() => import("./components/forms/CategoryForm"));
 const CategoryList = lazy(() => import("./pages/Admin/CategoryList"));
+const CommentList = lazy(() => import("./pages/Admin/Commentlist"));
 const ViewPost = lazy(() => import("./pages/Admin/ViewPost"));
 const EditPost = lazy(() => import("./pages/Admin/EditPost"));
 
@@ -72,6 +73,7 @@ function App() {
               <Route path="blogs/add" element={<PostAddForm />} />
               <Route path="add-category" element={<CategoryForm />} />
               <Route path="categories" element={<CategoryList />} />
+              <Route path="comments" element={<CommentList />} />
               <Route path="blog/:id" element={<ViewPost />} />
               <Route path="blog/edit/:id" element={<EditPost />} />
             </Route>
